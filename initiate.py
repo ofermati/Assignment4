@@ -34,8 +34,8 @@ def main(args : list[str]):
     # delete the database file if it exists
     repo._close()
     # uncomment if needed
-    # if os.path.isfile("bgumart.db"):
-    #     os.remove("bgumart.db")
+    if os.path.isfile("bgumart.db"):
+        os.remove("bgumart.db")
     repo.__init__()
     repo.create_tables()
     with open(inputfilename) as inputfile:
