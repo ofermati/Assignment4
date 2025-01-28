@@ -5,23 +5,22 @@ import os
 
 def add_branche(splittedline : list[str]):
     branch_id, location, num_employees = splittedline #מפצל את רשימת השדות של הקלט
-    branch = Branche(int(branch_id), location, int(num_employees))
+    branch = Branche(int(branch_id), location.strip(), int(num_employees))
     repo.branches.insert(branch)
 
 def add_supplier(splittedline : list[str]):
     supplier_id, name, contact_information = splittedline
-    supplier = Supplier(int(supplier_id), name, contact_information)
+    supplier = Supplier(int(supplier_id), name.strip(), contact_information.strip())
     repo.suppliers.insert(supplier)
 
 def add_product(splittedline : list[str]):
     id, description, price, quantity = splittedline
-    product = Product(int(id), description, float(price), int(quantity))
+    product = Product(int(id), description.strip(), float(price), int(quantity))
     repo.products.insert(product)
-
 
 def add_employee(splittedline : list[str]):
     id, name, salary, branche = splittedline
-    employee = Employee(int(id), name, float(salary), int(branche))
+    employee = Employee(int(id), name.strip(), float(salary), int(branche))
     repo.employees.insert(employee)
 
 adders = {  "B": add_branche,
@@ -41,6 +40,7 @@ def main(args : list[str]):
     with open(inputfilename) as inputfile:
         for line in inputfile:
             splittedline : list[str] = line.strip().split(",")
+            splittedline = [val.strip() for val in splittedline] # Ensure all values are stripped
             adders.get(splittedline[0])(splittedline[1:])
 
 if __name__ == '__main__':

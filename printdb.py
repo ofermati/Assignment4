@@ -3,7 +3,11 @@ from persistence import repo
 def print_table(table_name, rows):
     print(table_name)
     for row in rows:
-        print(row)
+        if hasattr(row, "__dict__"):
+            row = tuple(row.__dict__.values())
+        # בדיקה והמרת `bytes` לטקסט בצורה בטוחה
+        row = tuple(val.decode("utf-8") if isinstance(val, bytes) else str(val) for val in row)
+        print(" ".join(row))
 
 def print_employees_report():
     print("Employees report")
